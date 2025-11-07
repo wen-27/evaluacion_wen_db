@@ -17,7 +17,7 @@ Ver `modelo_logico.md` para detalles de entidades, atributos, relaciones y cardi
 Ver `schema.sql` para el esquema DDL de MySQL.
 
 ## Diagrama ER (Texto)
-![alt text](image.png)
+![alt text](images/image.png)
 
 ## Evidencia
 - **Diagrama Visual**: Para un diagrama visual, usa herramientas como drawSQL o StarUML. Por ejemplo, en drawSQL, crea las tablas con las relaciones mostradas arriba. Una captura de pantalla o enlace puede ser proporcionada si se genera.
@@ -71,6 +71,7 @@ FROM Pedido_Linea pl
 JOIN Producto p ON pl.id_producto = p.id_producto
 GROUP BY p.tipo;
 `
+
 ![alt text](images/image-6.png)
 
 6. **Promedio de pizzas pedidas por cliente**: `SELECT c.nombre, AVG(pl.cantidad) AS promedio_pizzas
