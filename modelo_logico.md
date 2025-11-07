@@ -79,4 +79,4 @@
 
 ## Grafica diagrama logico
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)

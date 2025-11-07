@@ -38,7 +38,7 @@ Ver `schema.sql` para el esquema DDL de MySQL.
 1. **Productos más vendidos (pizza, panzarottis, bebidas, etc.)**: `SELECT p.tipo, p.nombre, SUM(pl.cantidad) AS total_vendido FROM Producto p JOIN Pedido_Linea pl ON p.id_producto = pl.id_producto GROUP BY p.tipo, p.nombre ORDER BY total_vendido DESC;
 `
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 2. **Total de ingresos generados por cada combo**: `SELECT c.nombre AS combo, SUM(cp.cantidad * c.precio) AS ingresos
 FROM Pedido_Linea pl
@@ -47,7 +47,7 @@ JOIN Combo c ON cp.id_combo = c.id_combo
 GROUP BY c.nombre;
 ` 
 
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 
 3. **Pedidos realizados para recoger vs. comer en la pizzería**: `SELECT tipo, COUNT(*) AS total_pedidos
@@ -55,7 +55,7 @@ FROM Pedido
 GROUP BY tipo;
 `
 
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 4. **Adiciones más solicitadas en pedidos personalizados**: `SELECT a.nombre, COUNT(*) AS veces_solicitada
 FROM Pedido_Linea_Adicion pla
@@ -64,15 +64,14 @@ GROUP BY a.nombre
 ORDER BY veces_solicitada DESC;
 `
 
-![alt text](image-5.png)
+![alt text](images/image-5.png)
 
 5. **Cantidad total de productos vendidos por categoría**: `SELECT p.tipo, SUM(pl.cantidad) AS total_vendidos
 FROM Pedido_Linea pl
 JOIN Producto p ON pl.id_producto = p.id_producto
 GROUP BY p.tipo;
 `
-
-![alt text](image-6.png)
+![alt text](images/image-6.png)
 
 6. **Promedio de pizzas pedidas por cliente**: `SELECT c.nombre, AVG(pl.cantidad) AS promedio_pizzas
 FROM Pedido_Linea pl
@@ -83,7 +82,7 @@ WHERE p.tipo = 'pizza'
 GROUP BY c.nombre;
 `
 
-![alt text](image-7.png)
+![alt text](images/image-7.png)
 
 7. **Total de ventas por día de la semana**: `SELECT DAYNAME(fecha_hora) AS dia_semana, SUM(pl.cantidad * pl.precio_unitario) AS total_ventas
 FROM Pedido_Linea pl
@@ -92,7 +91,7 @@ GROUP BY dia_semana
 ORDER BY FIELD(dia_semana, 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday');
 `
 
-![alt text](image-8.png)
+![alt text](images/image-8.png)
 
 8. **Cantidad de panzarottis vendidos con extra queso**: `SELECT SUM(pl.cantidad) AS total_panzarottis_extra
 FROM Pedido_Linea pl
@@ -103,7 +102,7 @@ WHERE p.tipo = 'panzarotti' AND a.nombre LIKE '%Queso%';
 `
 
 
-![alt text](image-9.png)
+![alt text](images/image-9.png)
 
 9. **Pedidos que incluyen bebidas como parte de un combo**: `SELECT DISTINCT pl.id_pedido
 FROM Pedido_Linea pl
@@ -112,7 +111,7 @@ JOIN Producto p ON cp.id_producto = p.id_producto
 WHERE p.tipo = 'bebida';
 `
 
-![alt text](image-10.png)
+![alt text](images/image-10.png)
 
 10. **Clientes que han realizado más de 5 pedidos en el último mes**: `SELECT c.nombre, COUNT(*) AS total_pedidos
 FROM Pedido p
@@ -122,7 +121,7 @@ GROUP BY c.nombre
 HAVING total_pedidos > 5;
 `
 
-![alt text](image-11.png)
+![alt text](images/image-11.png)
 
 11. **Ingresos totales generados por productos no elaborados (bebidas, postres, etc.)**: `SELECT SUM(pl.cantidad * pl.precio_unitario) AS ingresos_no_elaborados
 FROM Pedido_Linea pl
@@ -130,7 +129,7 @@ JOIN Producto p ON pl.id_producto = p.id_producto
 WHERE p.tipo IN ('bebida','postre','otro');
 `
 
-![alt text](image-12.png)
+![alt text](images/image-12.png)
 
 12. **Promedio de adiciones por pedido**: `SELECT AVG(adiciones_por_pedido) AS promedio_adiciones
 FROM (
@@ -140,7 +139,7 @@ FROM (
 ) t;
 `
 
-![alt text](image-13.png)
+![alt text](images/image-13.png)
 
 13. **Total de combos vendidos en el último mes**: ``
 
@@ -152,13 +151,13 @@ GROUP BY c.nombre
 HAVING COUNT(DISTINCT p.tipo) = 2;
 `
 
-![alt text](image-14.png)
+![alt text](images/image-14.png)
 
 15. **Total de productos personalizados con adiciones**: `SELECT COUNT(DISTINCT id_pedido, id_linea) AS total_personalizados
 FROM Pedido_Linea_Adicion;
 `
 
-![alt text](image-15.png)
+![alt text](images/image-15.png)
 
 16. **Pedidos con más de 3 productos diferentes**: `SELECT id_pedido
 FROM Pedido_Linea
@@ -166,7 +165,7 @@ GROUP BY id_pedido
 HAVING COUNT(DISTINCT id_producto) > 3;
 `
 
-![alt text](image-16.png)
+![alt text](images/image-16.png)
 
 17. **Promedio de ingresos generados por día**: `SELECT AVG(total_diario) AS promedio_diario
 FROM (
@@ -177,7 +176,7 @@ FROM (
 ) t;
  `
 
- ![alt text](image-17.png)
+ ![alt text](images/image-17.png)
 
 18. **Clientes que han pedido pizzas con adiciones en más del 50% de sus pedidos**: `SELECT c.nombre
 FROM Cliente c
@@ -190,7 +189,7 @@ GROUP BY c.nombre
 HAVING SUM(CASE WHEN pla.id_adicion IS NOT NULL THEN 1 ELSE 0 END) / COUNT(DISTINCT p.id_pedido) > 0.5;
 `
 
-![alt text](image-18.png)
+![alt text](images/image-18.png)
 
 19. **Porcentaje de ventas provenientes de productos no elaborados**: `SELECT 
     (SUM(CASE WHEN p.tipo IN ('bebida','postre','otro') THEN pl.cantidad * pl.precio_unitario ELSE 0 END) /
@@ -199,7 +198,7 @@ FROM Pedido_Linea pl
 JOIN Producto p ON pl.id_producto = p.id_producto;
 `
 
-![alt text](image-19.png)
+![alt text](images/image-19.png)
 
 20. **Día de la semana con mayor número de pedidos para recoger**: `SELECT DAYNAME(fecha_hora) AS dia_semana, COUNT(*) AS total
 FROM Pedido
@@ -209,5 +208,5 @@ ORDER BY total DESC
 LIMIT 1;
 `
 
-![alt text](image-20.png)
+![alt text](images/image-20.png)
 
